@@ -15,6 +15,7 @@
   fmt,
   frozen-containers,
   gamemode,
+  gsettings-desktop-schemas,
   glslang,
   httplib,
   kdePackages,
@@ -119,6 +120,7 @@ stdenv.mkDerivation (finalAttrs: {
     fmt
     frozen-containers
     gamemode
+    gsettings-desktop-schemas
     httplib
     kdePackages.quazip
     libopus
@@ -198,12 +200,15 @@ stdenv.mkDerivation (finalAttrs: {
   '';
 
   preFixup = ''
-    qtWrapperArgs+=(--prefix LD_LIBRARY_PATH : ${
-      lib.makeLibraryPath [
-        vulkan-loader
-        pipewire
-      ]
-    })
+    qtWrapperArgs+=(
+      --prefix XDG_DATA_DIRS : ${gsettings-desktop-schemas}/share/gsettings-schemas/${gsettings-desktop-schemas.name}
+      --prefix LD_LIBRARY_PATH : ${
+        lib.makeLibraryPath [
+          vulkan-loader
+          pipewire
+        ]
+      }
+    )
   '';
 
   passthru = {
