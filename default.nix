@@ -201,6 +201,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   preFixup = ''
     qtWrapperArgs+=(
+      --set QT_QPA_PLATFORMTHEME ""
       --prefix XDG_DATA_DIRS : ${gsettings-desktop-schemas}/share/gsettings-schemas/${gsettings-desktop-schemas.name}
       --prefix LD_LIBRARY_PATH : ${
         lib.makeLibraryPath [
